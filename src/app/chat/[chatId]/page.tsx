@@ -15,7 +15,7 @@ type Props = {
 }
 
 const ChatPage = async ({params: {chatId}}: Props) => {
-    const {userId} = await auth()
+    const {userId} = await auth();
     if(!userId){
         return redirect("/sign-in");
     }
@@ -24,10 +24,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     if(!_chats){
         return redirect("/");
     }
-    if(!_chats.find(chat=> chat.id === parseInt(chatId))){
-        return redirect("/");
-    }
-    if (!_chats.find((chat) => chat.id === parseInt(chatId))) {
+    if(!_chats.find((chat) => chat.id === parseInt(chatId))){
         return redirect("/");
     }
 

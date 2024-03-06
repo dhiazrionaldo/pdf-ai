@@ -3,7 +3,7 @@ import { DrizzleChat } from '@/lib/db/schema';
 import Link from 'next/link';
 import React from 'react'
 import { Button } from './ui/button';
-import { MessageCircle, PlusCircle } from 'lucide-react';
+import { MessageCircle, PlusCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -12,6 +12,8 @@ type Props = {
 }
 
 const ChatSideBar = ({chats, chatId}: Props) => { 
+    const [loading, setLoading] = React.useState(false);
+
     return (
         <div className='w-full h-screen p-4 text-gray-200 bg-gray-900'>
             <Link href="/">
@@ -31,11 +33,12 @@ const ChatSideBar = ({chats, chatId}: Props) => {
                                 })
                             }>
                                 <MessageCircle className='mr-2' />
-                                <p className='w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis'>{chat.pdfName}</p>
+                                <p className='w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis'>
+                                    {chat.pdfName}
+                                </p>
                             </div>
                         </Link>
-                    ))
-                }
+                    ))}
             </div>
 
             {/* <div className='absolute bottom-4 left-4'>
