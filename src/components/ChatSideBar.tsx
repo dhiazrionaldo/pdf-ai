@@ -48,6 +48,6 @@ const ChatSideBar = ({chats, chatId}: Props) => {
             </div> */}
         </div>
     );
-}
+} 
 
 export default ChatSideBar
