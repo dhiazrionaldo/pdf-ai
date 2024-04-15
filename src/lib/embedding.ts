@@ -9,7 +9,7 @@ const openai = new OpenAIApi(config);
 export async function getEmbeddings(text: string){
     try {
         const response = await openai.createEmbedding({
-            model: "text-embedding-3-large",
+            model: "text-embedding-ada-002",
             input: text.replace(/\n/g, " ")
         })
 
