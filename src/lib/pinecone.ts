@@ -89,106 +89,64 @@ async function prepareDocument(page: PDFPage) {
       },
     }),
   ]);
+
+  // Function to identify and extract tables from document
+  function extractTables(docText: string): string[] {
+    // Your table extraction logic here
+    // This could involve using regular expressions or other methods to identify and extract tables from the document text
+    // For demonstration, let's assume we have a simple logic to identify tables based on certain keywords
+    const tables: string[] = [];
+    // Example logic to identify tables (replace this with your actual logic)
+    const tableKeywords = ["TABLE", "Header", "Footer"];
+    tableKeywords.forEach(keyword => {
+      const startIndex = docText.indexOf(keyword);
+      if (startIndex !== -1) {
+        // Find the end of the table or any delimiter
+        const endIndex = docText.indexOf("END TABLE", startIndex);
+        if (endIndex !== -1) {
+          tables.push(docText.substring(startIndex, endIndex));
+        }
+      }
+    });
+    return tables;
+  }
+
+  // Iterate through each document and extract tables
+  for (const doc of docs) {
+    const tables = extractTables(doc.pageContent);
+    // If tables are found, split the document into sections (excluding tables)
+    if (tables.length > 0) {
+      // Remove tables from document content
+      doc.pageContent = doc.pageContent.replace(/\b(TABLE|Header|Footer)\b.*?\bEND TABLE\b/gs, "");
+      // Append extracted tables as separate documents
+      tables.forEach(table => {
+        docs.push(new Document({
+          pageContent: table,
+          metadata: {
+            pageNumber: metadata.loc.pageNumber,
+            text: truncateStringByBytes(table, 36000),
+          },
+        }));
+      });
+    }
+  }
+
   return docs;
 }
-// import { PineconeClient, Vector, utils as PineconeUtils } from '@pinecone-database/pinecone'
-// import { downloadFromS3 } from './s3-server';
-// import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
-// import { Document, RecursiveCharacterTextSplitter } from '@pinecone-database/doc-splitter'
-// import { getEmbedding } from './embedding';
-// import md5 from 'md5';
-// import { convertToAscii } from './utils';
 
-// let pinecone: PineconeClient | null = null;
-
-// export const getPineconeClient = async () => {
-//     if(!pinecone){
-//         pinecone = new PineconeClient();
-//         await pinecone.init({
-//             environment: process.env.PINECONE_ENVIRONMENT!,
-//             apiKey: process.env.PINECONE_API_KEY!
-//         })
-//     }
-
-//     return pinecone
-// }
-
-// type PDFPage = {
-//     pageContent: string;
-//     metadata: {
-//         loc: {pageNumber:number}
-//     }
-// }
-
-// export async function loadS3IntoPinecone(fileKey: string){
-//     // Obtain PDF by download and read pdf
-//     console.log('downloading S3 into file system')
-
-//     const file_name = await downloadFromS3(fileKey);
-//     if(!file_name){
-//         throw new Error('could not download from s3')
-//     }
-
-//     const loader = new PDFLoader(file_name);
-//     const pages = (await loader.load()) as PDFPage[];
-
-//     // Split and segment the pdf into pages
-//     const document = await Promise.all(pages.map(prepareDocument));
-
-//     // Vectorize and embed the document 
-//     const vectors = await Promise.all(document.flat().map(embedDocument))
-
-//     // upload to pinecode
-//     const client = await getPineconeClient();
-//     const pineconeIndex = client.Index('pdf-ai-jas');
-
-//     console.log('inserting vector into pinecone')
-
-//     const namespace = convertToAscii(fileKey);
-
-//     PineconeUtils.chunkedUpsert(pineconeIndex, vectors, namespace, 10);
-//     return document[0]
-// }
-
-// async function embedDocument(doc: Document){
-//     try {
-//         const embeddings = await getEmbedding(doc.pageContent);
-//         const hash = md5(doc.pageContent);
-
-//         return {
-//             id: hash,
-//             values: embeddings,
-//             metadata: {
-//                 text: doc.metadata.text,
-//                 pageNumber: doc.metadata.pageNumber
-//             }
-//         } as Vector
-//     } catch (error) {
-//         console.log('error embedding document', error)
-//         throw error
-//     }
-// }
-
-// export const truncateStringByByte = (str: string, bytes: number) => {
-//     const encoder = new TextEncoder()
-//     return new TextDecoder('utf-8').decode(encoder.encode(str).slice(0, bytes))
-// }
-
-// async function prepareDocument(page: PDFPage){
-//     let {pageContent, metadata} = page
-
-//     pageContent = pageContent.replace(/\n/g,'')
-//     //split docs
-//     const splitter = new RecursiveCharacterTextSplitter();
-//     const docs = await splitter.splitDocuments([
-//         new Document({
-//             pageContent, 
-//             metadata: {
-//                 pageNumber: metadata.loc.pageNumber,
-//                 text: truncateStringByByte(pageContent, 36000)
-//             }
-//         })
-//     ]) 
-
-//     return docs
+// async function prepareDocument(page: PDFPage) {
+//   let { pageContent, metadata } = page;
+//   pageContent = pageContent.replace(/\n/g, "");
+//   // split the docs
+//   const splitter = new RecursiveCharacterTextSplitter();
+//   const docs = await splitter.splitDocuments([
+//     new Document({
+//       pageContent,
+//       metadata: {
+//         pageNumber: metadata.loc.pageNumber,
+//         text: truncateStringByBytes(pageContent, 36000),
+//       },
+//     }),
+//   ]);
+//   return docs;
 // }

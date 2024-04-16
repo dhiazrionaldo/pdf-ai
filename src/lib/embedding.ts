@@ -8,13 +8,43 @@ const openai = new OpenAIApi(config);
 
 export async function getEmbeddings(text: string){
     try {
-        const response = await openai.createEmbedding({
-            model: "text-embedding-ada-002",
-            input: text.replace(/\n/g, " ")
-        })
+        // Check if the text contains the table format "column name = row value"
+        const containsTableFormat = /=/.test(text);
 
-        const result = await response.json()
-        return result.data[0].embedding as number[]
+        if (containsTableFormat) {
+            // Split the text into rows based on newlines
+            const rows = text.split('\n');
+            
+            // Extract the values of each row and concatenate them into a single string
+            const concatenatedRows = rows.map(row => {
+                // Split each row into "column name = row value" pairs
+                const pairs = row.split(';'); // Assuming ';' separates pairs
+                return pairs.map(pair => pair.split('=')[1].trim()).join(' ');
+            });
+
+            // Join all rows into a single string
+            const formattedText = concatenatedRows.join('\n');
+
+            // Call the OpenAI embedding API with the formatted text
+            const response = await openai.createEmbedding({
+                model: "text-embedding-ada-002",
+                input: formattedText
+            });
+
+            // Extract and return the embedding result
+            const result = await response.json()
+            return result.data[0].embedding as number[];
+        } else {
+            // Call the OpenAI embedding API directly with the original text
+            const response = await openai.createEmbedding({
+                model: "text-embedding-ada-002",
+                input: text.replace(/\n/g, " ")
+            });
+
+            // Extract and return the embedding result
+            const result = await response.json()
+            return result.data[0].embedding as number[];
+        }
     } catch (error) {
         console.log('error calling openai embedding api', error)
         throw error

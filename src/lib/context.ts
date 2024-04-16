@@ -39,6 +39,7 @@ export async function getContext(query: string, fileKey: string) {
   };
 
   let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
+
   // 5 vectors
   return docs.join("\n").substring(0, 3000);
 }
