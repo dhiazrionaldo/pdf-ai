@@ -19,7 +19,17 @@ export async function getEmbeddings(text: string){
             const concatenatedRows = rows.map(row => {
                 // Split each row into "column name = row value" pairs
                 const pairs = row.split(';'); // Assuming ';' separates pairs
-                return pairs.map(pair => pair.split('=')[1].trim()).join(' ');
+                return pairs.map(pair => {
+                    const pairComponents = pair.split('=');
+                    // Check if the pair has at least two components
+                    if (pairComponents.length >= 2) {
+                        // Extract the value and trim it
+                        return pairComponents[1].trim();
+                    } else {
+                        // Return an empty string if no value is found
+                        return '';
+                    }
+                }).join(' ');
             });
 
             // Join all rows into a single string
