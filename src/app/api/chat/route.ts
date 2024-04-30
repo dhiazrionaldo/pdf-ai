@@ -24,6 +24,7 @@ export async function POST(req: Request) {
     const lastMessage = messages[messages.length - 1];
     const context = await getContext(lastMessage.content, fileKey);
 
+    console.dir(context, {maxArrayLength: null});
     const prompt = {
       role: "system",
       content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -43,7 +44,7 @@ export async function POST(req: Request) {
     };
     
     const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [
         prompt,
         ...messages.filter((message: Message) => message.role === "user"),

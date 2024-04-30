@@ -32,14 +32,19 @@ export async function getContext(query: string, fileKey: string) {
   const qualifyingDocs = matches.filter(
     (match) => match.score && match.score > 0.7
   );
+  
+  // let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
 
   type Metadata = {
     text: string;
     pageNumber: number;
   };
-
-  let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
+  let context = qualifyingDocs.map((match) => {
+    const metadata = match.metadata as Metadata;
+    return `Page ${metadata.pageNumber}: ${metadata.text}`;
+  });
+  
 
   // 5 vectors
-  return docs.join("\n").substring(0, 3000);
+  return context.join("\n").substring(0, 3000);
 }
