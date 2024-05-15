@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     const lastMessage = messages[messages.length - 1];
     const context = await getContext(lastMessage.content, fileKey);
 
-    console.dir(context, {maxArrayLength: null});
+    // console.dir(context, {maxArrayLength: null});
     const prompt = {
       role: "system",
       content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -36,6 +36,7 @@ export async function POST(req: Request) {
       START CONTEXT BLOCK
       ${context}
       END OF CONTEXT BLOCK
+      AI assistant will answer every question in complete result in 1 response.
       AI assistant will take into account any CONTEXT BLOCK that is provided in a conversation.
       If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
       AI assistant will not apologize for previous responses, but instead will indicated new information was gained.

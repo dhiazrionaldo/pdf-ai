@@ -55,7 +55,7 @@ async function embedDocument(doc: Document) {
   try {
     const embeddings = await getEmbeddings(doc.pageContent);
     const hash = md5(doc.pageContent);
-
+    
     return {
       id: hash,
       values: embeddings,
@@ -78,6 +78,8 @@ export const truncateStringByBytes = (str: string, bytes: number) => {
 async function prepareDocument(page: PDFPage) {
   let { pageContent, metadata } = page;
   pageContent = pageContent.replace(/\n/g, "");
+
+  // console.dir(pageContent, {maxArrayLength: null});
   // split the docs
   const splitter = new RecursiveCharacterTextSplitter();
   const docs = await splitter.splitDocuments([
@@ -85,7 +87,7 @@ async function prepareDocument(page: PDFPage) {
       pageContent,
       metadata: {
         pageNumber: metadata.loc.pageNumber,
-        text: truncateStringByBytes(pageContent, 36000),
+        text: truncateStringByBytes(pageContent, 50000),
       },
     }),
   ]);

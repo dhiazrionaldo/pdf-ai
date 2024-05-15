@@ -30,7 +30,7 @@ export async function getContext(query: string, fileKey: string) {
   const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
 
   const qualifyingDocs = matches.filter(
-    (match) => match.score && match.score > 0.7
+    (match) => match.score && match.score >= 0.7
   );
   
   // let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
@@ -39,6 +39,7 @@ export async function getContext(query: string, fileKey: string) {
     text: string;
     pageNumber: number;
   };
+  
   let context = qualifyingDocs.map((match) => {
     const metadata = match.metadata as Metadata;
     return `Page ${metadata.pageNumber}: ${metadata.text}`;
