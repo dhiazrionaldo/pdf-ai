@@ -33,7 +33,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <div className="flex max-h-screen">
             <div className="flex w-full max-h-screen">
-                <div className="flex-[1] max-w-xs overflow-y">
+                <div className="flex-[1] overflow-y" style={{width:'17%'}}>
                     <ChatSideBar chats={_chats} chatId={parseInt(chatId)} />
                 </div>
                 <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
