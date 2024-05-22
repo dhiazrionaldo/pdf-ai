@@ -5,6 +5,8 @@ import React from 'react'
 import { Button } from './ui/button';
 import { MessageCircle, PlusCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import jasLogo from '../asset/jas - white.png';
 
 type Props = {
     chats: DrizzleChat[];
@@ -16,6 +18,7 @@ const ChatSideBar = ({chats, chatId}: Props) => {
 
     return (
         <div className='w-full h-screen p-4 text-gray-200 bg-gray-900'>
+            <Image src={jasLogo} width={120} height={120} alt="jas logo white" className='pb-3'/>
             <Link href="/">
                 <Button className='w-full border-dashed border-white border'>
                     <PlusCircle className='mr-2 w-4 h-4'/>
