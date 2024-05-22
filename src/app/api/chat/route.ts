@@ -50,6 +50,7 @@ export async function POST(req: Request) {
       to answer the question format is "based on the {metadata page number on the context} page number, the information is"
       make sure you answer all the question in complete information that are containing in the context and also you have to put the page number (metadata or page number from table of content) in one respond.
       here is the context, 
+      if you are asked from another language, you have to answer with the same language. if the context is on other language, you have to translate it first.
       START CONTEXT BLOCK
       ${context}
       END OF CONTEXT BLOCK
