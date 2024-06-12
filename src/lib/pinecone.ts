@@ -46,7 +46,8 @@ export async function loadS3IntoPinecone(fileKey: string) {
   const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
 
   console.log("inserting vectors into pinecone");
-  await namespace.upsert(vectors);
+  await upsertByBatch(namespace, vectors, 100);
+  // await namespace.upsert(vectors);
 
   return documents[0];
 }
@@ -67,6 +68,13 @@ async function embedDocument(doc: Document) {
   } catch (error) {
     console.log("error embedding document", error);
     throw error;
+  }
+}
+
+async function upsertByBatch(namespace: any, vectors: PineconeRecord[], batchSize: number){
+  for (let i = 0; i < vectors.length; i += batchSize) {
+    const batch = vectors.slice(i, i + batchSize);
+    await namespace.upsert(batch);
   }
 }
 
