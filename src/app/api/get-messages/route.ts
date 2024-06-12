@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export const runtime = "edge";
+export const maxDuration = 60;
 
 export const POST = async (req: Request) => {
   const { chatId } = await req.json();
