@@ -14,7 +14,7 @@ import Image from 'next/image';
 import jasLogo from '@/asset/new-logo-cas-group-jas-airport-services.png';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
-import { BookOpenText } from 'lucide-react';
+import { BookOpenText, MessageCircleMore } from 'lucide-react';
 
 type Props = {
     params: {
@@ -53,7 +53,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                                     <Button className="m-2"><BookOpenText className='mr-2 w-4 h-4'/> PDF</Button>
                                 </Link>
                                 <Link href={`/mobileSideBar/${chatId}`}>
-                                    <Button>List</Button>
+                                    <Button> <MessageCircleMore className='mr-2 w-4 h-4'/> List</Button>
                                 </Link>
                             </div>
                         </div>
