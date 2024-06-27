@@ -6,15 +6,14 @@ import { chats } from '@/lib/db/schema';
 import { auth } from '@clerk/nextjs';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
-import React from 'react';
+import React, {useState} from 'react';
 import {useIsMobile} from '@/hooks/useIsMobile'; 
 import { headers } from "next/headers";
-import MobileChatComponent from '@/components/MobileChat';
+import ModalPDFViewer from '@/components/PdfModalViewer';
 import Image from 'next/image';
 import jasLogo from '@/asset/new-logo-cas-group-jas-airport-services.png';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
-import { BookOpenText } from 'lucide-react';
 
 type Props = {
     params: {
@@ -44,20 +43,17 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <>
         {isMobile ? ( 
-            <div className="flex max-h-screen">
-                <div className="flex w-full max-h-screen flex-col">
+            <div className="flex max-h-screen h-screen">
+                <div className="flex w-full max-h-screen h-screen flex-col">
                         <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit max-w-screen flex items-center justify-between">
                             <Image src={jasLogo} width={190} height={190} alt="jas logo white"/>
                             <div className="flex items-center">
-                                <Link href={`/mobilePdf/${chatId}`}>
-                                    <Button className="m-2"><BookOpenText className='mr-2 w-4 h-4'/> PDF</Button>
-                                </Link>
-                                <Link href={`/mobileSideBar/${chatId}`}>
-                                    <Button>List</Button>
+                                <Link href={`/chat/${chatId}`}>
+                                    <Button>Back</Button>
                                 </Link>
                             </div>
                         </div>
-                        <MobileChatComponent chatId={parseInt(chatId)}/>
+                        <ModalPDFViewer pdf_url={currentChat?.pdfUrl || ""} />
                 </div>
             </div>
             ) : (

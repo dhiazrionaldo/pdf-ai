@@ -13,12 +13,11 @@ type Props = {
     chatId: number;
 }
 
-const ChatSideBar = ({chats, chatId}: Props) => { 
+const MobileChatSideBar = ({chats, chatId}: Props) => { 
     const [loading, setLoading] = React.useState(false);
 
     return (
         <div className='w-full h-screen p-4 text-gray-200 bg-gray-900'>
-            <Image src={jasLogo} width={120} height={120} alt="jas logo white" className='pb-3'/>
             <Link href="/">
                 <Button className='w-full border-dashed border-white border'>
                     <PlusCircle className='mr-2 w-4 h-4'/>
@@ -47,4 +46,4 @@ const ChatSideBar = ({chats, chatId}: Props) => {
     );
 } 
 
-export default ChatSideBar
+export default MobileChatSideBar
