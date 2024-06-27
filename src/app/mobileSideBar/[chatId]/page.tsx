@@ -21,6 +21,9 @@ type Props = {
     }
 }
 
+const userAgent = headers().get("user-agent") || "";
+const isMobile = useIsMobile(userAgent);
+
 const ChatPage = async ({params: {chatId}}: Props) => {
     const {userId} = await auth();
     if(!userId){
@@ -36,10 +39,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     }
 
     const currentChat = _chats.find((chat) => chat.id === parseInt(chatId));
-    
-    const userAgent = headers().get("user-agent") || "";
-    const isMobile = useIsMobile(userAgent);
-    
+       
     return (
         <>
         {isMobile ? ( 
