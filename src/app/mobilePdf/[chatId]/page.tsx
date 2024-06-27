@@ -21,10 +21,10 @@ type Props = {
     }
 }
 
-const userAgent = headers().get("user-agent") || "";
-const isMobile = useIsMobile(userAgent);
-
 const ChatPage = async ({params: {chatId}}: Props) => {
+    const userAgent = headers().get("user-agent") || "";
+    const isMobile = useIsMobile(userAgent);
+    
     const {userId} = await auth();
     if(!userId){
         return redirect("/sign-in");
