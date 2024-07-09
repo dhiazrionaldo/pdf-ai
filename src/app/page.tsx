@@ -8,12 +8,8 @@ import { chats } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import Image from 'next/image';
 import jasLogo from '../asset/jas - white.png';
-// import { Inbox, Loader2 } from 'lucide-react';
-// import React, { useState } from 'react';
-// import toast from "react-hot-toast";
 
 export default async function Home() {
-  // const [isLoading, setIsLoading] = useState(false);
   const {userId} = await auth()
   const isAuth = !!userId
   let firstChat;

@@ -47,5 +47,5 @@ export async function getContext(query: string, fileKey: string) {
   
 
   // 5 vectors
-  return context.join("\n").substring(0, 3000);
+  return context.join("\n").substring(0, 5000);
 }
