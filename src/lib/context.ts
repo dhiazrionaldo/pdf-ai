@@ -14,7 +14,7 @@ export async function getMatchesFromEmbeddings(
     const pineconeIndex = await client.index("pdf-ai-jas");
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
     const queryResult = await namespace.query({
-      topK: 5,
+      topK: 6,
       vector: embeddings,
       includeMetadata: true,
     });
@@ -47,5 +47,5 @@ export async function getContext(query: string, fileKey: string) {
   
 
   // 5 vectors
-  return context.join("\n").substring(0, 5000);
+  return context.join("\n").substring(0, 10000);
 }
