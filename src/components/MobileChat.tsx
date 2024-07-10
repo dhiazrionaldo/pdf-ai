@@ -46,7 +46,7 @@ const MobileChatComponent = ({chatId}: Props) => {
       >
         <div className="relative max-h-screen overflow-y">
             <MessageList messages={messages} isLoading={isLoading}/>
-            <form onSubmit={handleSubmit} className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white">
+            <form onSubmit={handleSubmit} className="fixed bottom-0 inset-x-0 px-2 py-4 bg-white">
               <div className="flex">
                 <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full"/>
                 <Button>

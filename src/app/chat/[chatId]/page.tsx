@@ -47,18 +47,18 @@ const ChatPage = async ({params: {chatId}}: Props) => {
         {isMobile ? ( 
             <div className="flex max-h-screen">
                 <div className="flex w-full max-h-screen flex-col">
-                        <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit max-w-screen flex items-center justify-between">
-                            <Image src={jasLogo} width={190} height={190} alt="jas logo white"/>
-                            <div className="flex items-center">
-                                <Link href={`/mobilePdf/${chatId}`}>
-                                    <Button className="m-2"><BookOpenText className='mr-2 w-4 h-4'/> PDF</Button>
-                                </Link>
-                                <Link href={`/mobileSideBar/${chatId}`}>
-                                    <Button> <MessageCircleMore className='mr-2 w-4 h-4'/> List</Button>
-                                </Link>
-                            </div>
+                    <div className="absolute-top top-0 inset-x-0 p-2 bg-white h-fit max-w-screen flex items-center justify-between">
+                        <Image src={jasLogo} width={190} height={190} alt="jas logo white"/>
+                        <div className="flex items-center">
+                            <Link href={`/mobilePdf/${chatId}`}>
+                                <Button className="m-2"><BookOpenText className='mr-2 w-4 h-4'/> PDF</Button>
+                            </Link>
+                            <Link href={`/mobileSideBar/${chatId}`}>
+                                <Button> <MessageCircleMore className='mr-2 w-4 h-4'/> List</Button>
+                            </Link>
                         </div>
-                        <MobileChatComponent chatId={parseInt(chatId)}/>
+                    </div>
+                    <MobileChatComponent chatId={parseInt(chatId)}/>
                 </div>
             </div>
             ) : (
