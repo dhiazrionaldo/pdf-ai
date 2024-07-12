@@ -41,21 +41,19 @@ const ChatComponent = ({chatId}: Props) => {
     return (
       <div
         className="relative max-h-screen overflow-scroll"
+        style={{height:'97%'}}
         id="message-container"
       >
-        <div className="relative max-h-screen overflow-y">
-            <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-                <h3 className="text-xl font-bold">Chat</h3>
-            </div>
+        <div className="relative max-h-screen">
+            
             <MessageList messages={messages} isLoading={isLoading}/>
-            <form onSubmit={handleSubmit} className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white">
-              <div className="flex">
+            <form onSubmit={handleSubmit} className="sticky flex bottom-0 inset-x-2 px-2 py-4 w-full bg-white">
+              {/* <div className="sticky"> */}
                 <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full"/>
                 <Button>
                     <Send className="h-4 w-4" />
                 </Button>
-
-              </div>
+              {/* </div> */}
             </form>
         </div>
       </div>

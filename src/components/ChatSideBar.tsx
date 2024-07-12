@@ -18,14 +18,8 @@ const ChatSideBar = ({chats, chatId}: Props) => {
 
     return (
         <div className='w-full h-screen p-4 text-gray-200 bg-gray-900'>
-            <Image src={jasLogo} width={120} height={120} alt="jas logo white" className='pb-3'/>
-            <Link href="/">
-                <Button className='w-full border-dashed border-white border'>
-                    <PlusCircle className='mr-2 w-4 h-4'/>
-                    New Chat</Button>
-            </Link>
-
-            <div className='flex flex-col gap-2 mt-4 h-full overflow-y-auto' style={{height: '80%'}}>
+        
+            <div className='flex flex-col gap-2 mt-4 h-full overflow-y-auto' style={{height: '70%'}}>
                 {
                     chats.map((chat) => (
                         <Link key={chat.id} href={`/chat/${chat.id}`}>

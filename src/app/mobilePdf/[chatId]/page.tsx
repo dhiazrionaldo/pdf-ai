@@ -43,17 +43,9 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <>
         {isMobile ? ( 
-            <div className="flex max-h-screen h-screen">
-                <div className="flex w-full max-h-screen h-screen flex-col">
-                        <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit max-w-screen flex items-center justify-between">
-                            <Image src={jasLogo} width={190} height={190} alt="jas logo white"/>
-                            <div className="flex items-center">
-                                <Link href={`/chat/${chatId}`}>
-                                    <Button>Back</Button>
-                                </Link>
-                            </div>
-                        </div>
-                        <ModalPDFViewer pdf_url={currentChat?.pdfUrl || ""} />
+            <div className="flex max-h-screen">
+                <div className="flex w-full max-h-screen h-screen">
+                    <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />
                 </div>
             </div>
             ) : (

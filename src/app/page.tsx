@@ -29,7 +29,7 @@ export default async function Home() {
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center">
             <h1 className="mr-3 text-5xl font-semibold text-white">Chat with your document!</h1>
-            <UserButton afterSignOutUrl="/sign-in"/>
+            <UserButton afterSignOutUrl="/"/>
           </div>
           
           <p className="max-w-xl mt-1 text-lg text-white">
