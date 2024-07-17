@@ -24,6 +24,20 @@ export default async function Home() {
     <div className="w-screen min-h-screen bg-gradient-to-r from-gray-900 to-gray-600 bg-gradient-to-r">
       <div className="flex flex-col pl-3 pt-3 text-white">
         <Image src={jasLogo} width={120} height={120} alt="jas logo white"/>
+        <div>
+          {/* <Button>
+            Manual <ArrowRight className="ml-2" />
+          </Button>
+          <Button>
+            Circular <ArrowRight className="ml-2" />
+          </Button>
+          <Button>
+            SOP <ArrowRight className="ml-2" />
+          </Button>
+          <Button>
+            Checklist <ArrowRight className="ml-2" />
+          </Button> */}
+        </div>
       </div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">
