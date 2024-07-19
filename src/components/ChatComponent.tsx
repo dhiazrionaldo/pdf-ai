@@ -8,6 +8,7 @@ import MessageList from "./MessageList";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Message } from "ai";
+import ClearChat from "./ClearChat";
 
 type Props = {chatId: number};
 
@@ -29,6 +30,7 @@ const ChatComponent = ({chatId}: Props) => {
         },
         initialMessages: data || []
     });
+    
       React.useEffect(() => {
         const messageContainer = document.getElementById("message-container");
         if (messageContainer) {
@@ -40,18 +42,21 @@ const ChatComponent = ({chatId}: Props) => {
       }, [messages]);
     return (
       <div
-        className="relative max-h-screen overflow-y-auto"
+        className="h-screen flex flex-col justify-between"
         style={{height: '90%'}}
         id="message-container"
       >
-            
-        <MessageList messages={messages} isLoading={isLoading}/>
-        <form onSubmit={handleSubmit} className="sticky flex bottom-0 inset-x-2 px-2 py-4 w-full bg-white">
+        <div className="overflow-auto">
+          <MessageList messages={messages} isLoading={isLoading}/>
+        </div>   
+        
+        <form onSubmit={handleSubmit} className="flex sticky-bottom bottom-0 inset-x-2 px-2 py-4 w-full bg-white">
           {/* <div className="sticky"> */}
             <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full"/>
             <Button>
                 <Send className="h-4 w-4" />
             </Button>
+            
           {/* </div> */}
         </form>
       </div>

@@ -22,13 +22,13 @@ import {
     SheetTitle,
     SheetTrigger,
   } from "@/components/ui/sheet";
+import ClearChat from '@/components/ClearChat';
 
 type Props = {
     params: {
         chatId: string
     }
 }
-
 
 const ChatPage = async ({params: {chatId}}: Props) => {
     const userAgent = headers().get("user-agent") || "";
@@ -52,14 +52,12 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <>
         {isMobile ? ( 
-            <div className="flex max-h-screen">
-                <div className="flex w-full max-h-screen">
-                    <MobileChatComponent chatId={parseInt(chatId)}/>
-                </div>
+            <div className="flex flex-col h-screen w-screen justify-between">
+                <MobileChatComponent chatId={parseInt(chatId)}/>
             </div>
             ) : (
-            <div className="flex max-h-screen overflow-hidden">
-                <div className="flex w-full max-h-screen overflow-hidden">
+            <div className="flex flex-col h-screen overflow-hidden justify-between">
+                <div className="flex flex-row w-full h-screen overflow-hidden">
                     <Sheet>
                         <SheetTrigger asChild >
                             <Button variant="outline"><Menu /></Button>
@@ -84,11 +82,11 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                     <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
                         <PDFViewer pdf_url={currentChat?.pdfUrl || ""} />
                     </div>
-                    <div className="flex-[6] border-l-4 border-l-slate-200 overflow-hidden max-h-screen">
+                    <div className="flex-[6] border-l-4 border-l-slate-200 overflow-hidden h-screen">
                         <div className="sticky-top top-0 inset-x-0 p-1 bg-white h-fit w-full flex items-center justify-between">
                             <h3 className="text-xl font-bold">Chat</h3>
                             <UserButton afterSignOutUrl='/'/>
-                            <Button variant='destructive'>Clear Chat</Button>
+                            <ClearChat chatId={parseInt(chatId)}/>
                         </div>
                         <ChatComponent chatId={parseInt(chatId)}/>
                     </div>

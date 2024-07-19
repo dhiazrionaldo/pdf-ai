@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai-edge";
 import { Message, OpenAIStream, StreamingTextResponse } from "ai";
 import { getContext } from "@/lib/context";
 import { db } from "@/lib/db";
-import { chats, messages as _messages } from "@/lib/db/schema";
+import { chats, messages as _messages, messages } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -94,4 +94,21 @@ export async function POST(req: Request) {
     });
     return new StreamingTextResponse(stream);
   } catch (error) {}
+}
+
+export async function DELETE(req: Request){
+  try {
+    const { chatId } = await req.json();
+    await db.delete(messages).where(eq(messages.chatId, chatId));
+    
+    return NextResponse.json(
+      {messages: 'Chat deleted successfully'}, 
+      {status: 200}
+    )
+  } catch (error) {
+    return NextResponse.json(
+      {error: "internal server error"},
+      {status: 500}
+    )
+  }
 }
