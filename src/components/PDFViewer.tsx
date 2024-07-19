@@ -15,7 +15,7 @@ const PDFViewer = ({ pdf_url }: Props) => {
   const endLoad = () =>{
     setIsLoading(false);
   }
-
+  setTimeout(endLoad, 3000);
   console.log('isLoading', isLoading)
   return (
     <div className="w-full h-full relative">
