@@ -4,7 +4,7 @@ import PDFViewer from '@/components/PDFViewer';
 import { db } from '@/lib/db';
 import { chats } from '@/lib/db/schema';
 import { auth, UserButton } from '@clerk/nextjs';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import {useIsMobile} from '@/hooks/useIsMobile'; 
@@ -34,12 +34,12 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     const userAgent = headers().get("user-agent") || "";
     const isMobile = useIsMobile(userAgent);
 
-    const {userId} = await auth();
+    const {userId, orgId} = await auth();
     if(!userId){
         return redirect("/sign-in");
     }
 
-    const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
+    const _chats = await db.select().from(chats).where(and(eq(chats.orgId, orgId), eq(chats.userId, userId))); //.where(eq(chats.userId, userId)); //shows chat list here
     if(!_chats){
         return redirect("/");
     }

@@ -1,20 +1,21 @@
 import FileUpload from "@/components/FileUpload";
 import { Button } from "@/components/ui/button";
-import { UserButton, auth } from "@clerk/nextjs";
+import { UserButton, auth, OrganizationSwitcher, clerkClient } from "@clerk/nextjs";
 import { ArrowRight, LogIn } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import Image from 'next/image';
 import jasLogo from '../asset/jas - white.png';
 
 export default async function Home() {
-  const {userId} = await auth()
+  const {userId, orgId} = await auth()
   const isAuth = !!userId
+  
   let firstChat;
-  if (userId) {
-    firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
+  if (orgId) {
+    firstChat = await db.select().from(chats).where(and(eq(chats.orgId, orgId), eq(chats.userId, userId)));
     if (firstChat) {
       firstChat = firstChat[0];
     }
@@ -41,9 +42,12 @@ export default async function Home() {
       </div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">
-          <div className="flex items-center">
-            <h1 className="mr-3 text-5xl font-semibold text-white">Chat with your document!</h1>
+          <div className="flex flex-col items-center text-center text-white">
             <UserButton afterSignOutUrl="/"/>
+            <OrganizationSwitcher hidePersonal={true} defaultOpen/>
+          </div>
+          <div className="flex items-center m-3">
+            <h1 className="mr-3 text-5xl font-semibold text-white">Chat with your document!</h1>
           </div>
           
           <p className="max-w-xl mt-1 text-lg text-white">

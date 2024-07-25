@@ -8,6 +8,7 @@ export const chats = pgTable('chats', {
     pdfUrl: text("pdf_url").notNull(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     userId: varchar("user_id", {length:256}).notNull(),
+    orgId: varchar("org_id", {length: 256}).notNull(),
     fileKey: text("file_key").notNull()
 });
 
@@ -20,3 +21,5 @@ export const messages = pgTable('messages',{
     createdAt: timestamp("created_at").notNull().defaultNow(),
     role: userSystemEnum('role').notNull()
 });
+
+
