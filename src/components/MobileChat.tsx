@@ -47,16 +47,15 @@ const MobileChatComponent = ({chatId}: Props) => {
 
     return (
       <div
-        className="h-screen flex flex-col justify-between"
-        style={{height: '90%'}}
+        className="max-h-screen relative overflow-scroll"
         id="message-container"
       >
         {/* header */}
         {/* <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit"> */}
           {/* <h3 className="text-xl font-bold">Chat</h3> */}
-          <div>
+          <div className="sticky top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
             <Sheet>
-              <SheetTrigger asChild className="fixed float-left">
+              <SheetTrigger asChild >
                   <Button variant="outline"><Menu /></Button>
               </SheetTrigger>
               <SheetContent side='left' className='text-gray-200 bg-gray-900'>
@@ -75,30 +74,29 @@ const MobileChatComponent = ({chatId}: Props) => {
               </SheetContent>
             </Sheet>
 
-            <div className="float-right">
-              <ClearChat chatId={chatId} />
-            </div>
+            <ClearChat chatId={chatId} />
+            
           </div>
         {/* </div> */}
 
         {/* message list */}
-          <div className="overflow-auto">
+          
             <MessageList messages={messages} isLoading={isLoading} />
-          </div>
+          
           
         
-          <form onSubmit={handleSubmit}>
-            <div className="flex w-full fixed-bottom bottom-0 inset-x-0 px-2 py-4">
-              <Input
-                value={input}
-                onChange={handleInputChange}
-                placeholder="Ask any question..."
-                className="w-full"
-              />
-              <Button className="bg-blue-600 ml-2">
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
+          <form onSubmit={handleSubmit} className="sticky bottom-0 inset-x-0 px-2 py-4 z-10">
+              <div className="flex">
+                <Input
+                  value={input}
+                  onChange={handleInputChange}
+                  placeholder="Ask any question..."
+                  className="w-full"
+                />
+                <Button className="bg-blue-600 ml-2">
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
           </form>        
       </div>
       // <div

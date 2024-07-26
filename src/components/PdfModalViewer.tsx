@@ -23,16 +23,23 @@ const ModalPDFViewer = ({ pdf_url, chatId }: Props) => {
   }
   
   return (
-    <div className="relative max-h-screen max-w-screen">
+    <div className="h-full relative overflow-scroll">
+      
+      {isLoading && (
+        <div className={`w-full h-full flex items-center justify-center absolute top-0 left-0`}>
+          <Loader2 className='h-10 w-10 text-blue-600 animate-spin' />
+        </div>
+      )}
+      
       <Sheet>
-        <SheetTrigger asChild className="fixed float-left">
+        <SheetTrigger asChild className='fixed float-left m-1'>
             <Button variant="outline"><Menu /></Button>
         </SheetTrigger>
         <SheetContent side='left' className='text-gray-200 bg-gray-900'>
             <SheetHeader className='text-gray-200 bg-gray-900 w-full px-5'>
                 <SheetTitle className="flex item-center justify-between">
-                  <Image src={jasLogo} width={90} height={90} alt="jas logo white" className='pb-3'/>
-                  <UserButton />
+                <Image src={jasLogo} width={90} height={90} alt="jas logo white" className='pb-3'/>
+                <UserButton />
                 </SheetTitle>
             </SheetHeader> 
             <Link href={`/chat/${chatId}`}>
@@ -43,14 +50,11 @@ const ModalPDFViewer = ({ pdf_url, chatId }: Props) => {
             </Link>
         </SheetContent>
       </Sheet>
-      {isLoading && (
-        <div className={`w-full h-full flex items-center justify-center absolute top-0 left-0`}>
-          <Loader2 className='h-10 w-10 text-blue-600 animate-spin' />
-        </div>
-      )}
+      
       <iframe
           src={completeUrl}
-          className={`w-full h-full ${isLoading ? 'invisible' : 'visible'}`}
+          height="90%"
+          className={`w-full ${isLoading ? 'invisible' : 'visible'}`}
           loading="lazy"
           onLoad={endLoad}
           onLoadStart={startLoad}

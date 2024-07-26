@@ -17,7 +17,7 @@ const MessageList = ({messages, isLoading}: Props) =>{
         );
     }
     if(!messages) return <></>
-
+    
     const renderMessageContent = (content: string) => {
         const lines = content.split('\n').filter(line => line.trim() !== '');
 

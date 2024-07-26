@@ -38,9 +38,8 @@ export default function ClearChat({chatId}: Props){
             {isLoading ? (
                 <Button disabled><Loader2 className="h-4 w-4 animate-spin" /></Button>
             ):(
-                <div className="p-2">
-                    <Button className="p-0 h-10 w-10" onClick={()=> {clearChat()}} variant={'destructive'}><Trash2 /> </Button>
-                </div>
+                
+                <Button className="p-0 h-10 w-10" onClick={()=> {clearChat()}} variant={'destructive'}><Trash2 /> </Button>
                 
             )}
         </>       

@@ -3,7 +3,7 @@ import ChatSideBar from '@/components/ChatSideBar';
 import PDFViewer from '@/components/PDFViewer';
 import { db } from '@/lib/db';
 import { chats } from '@/lib/db/schema';
-import { auth } from '@clerk/nextjs';
+import { auth, UserButton } from '@clerk/nextjs';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import React, {useState} from 'react';
@@ -14,6 +14,8 @@ import Image from 'next/image';
 import jasLogo from '@/asset/new-logo-cas-group-jas-airport-services.png';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Menu, MessageCircle, MessageCircleMore } from 'lucide-react';
 
 type Props = {
     params: {
@@ -43,10 +45,8 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <>
         {isMobile ? ( 
-            <div className="flex max-h-screen">
-                <div className="flex w-full max-h-screen h-screen">
-                    <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />
-                </div>
+            <div className="flex flex-col h-screen w-screen justify-between">
+                <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />                
             </div>
             ) : (
             <div className="flex max-h-screen">
