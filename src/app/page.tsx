@@ -1,6 +1,7 @@
 import FileUpload from "@/components/FileUpload";
 import { Button } from "@/components/ui/button";
 import { UserButton, auth, OrganizationSwitcher, clerkClient } from "@clerk/nextjs";
+import {dark} from '@clerk/themes'
 import { ArrowRight, LogIn } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/lib/db";
@@ -21,30 +22,18 @@ export default async function Home() {
     }
   }
 
+  
+
   return (
     <div className="w-screen min-h-screen bg-gradient-to-r from-gray-900 to-gray-600 bg-gradient-to-r">
       <div className="flex flex-col pl-3 pt-3 text-white">
         <Image src={jasLogo} width={120} height={120} alt="jas logo white"/>
-        <div>
-          {/* <Button>
-            Manual <ArrowRight className="ml-2" />
-          </Button>
-          <Button>
-            Circular <ArrowRight className="ml-2" />
-          </Button>
-          <Button>
-            SOP <ArrowRight className="ml-2" />
-          </Button>
-          <Button>
-            Checklist <ArrowRight className="ml-2" />
-          </Button> */}
-        </div>
       </div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">
-          <div className="flex flex-col items-center text-center text-white">
+          <div className="flex flex-col items-center text-center" style={{color: 'red !important'}}>
             <UserButton afterSignOutUrl="/"/>
-            <OrganizationSwitcher hidePersonal={true} defaultOpen/>
+            <OrganizationSwitcher appearance={{baseTheme: dark}} hidePersonal={true} defaultOpen/>
           </div>
           <div className="flex items-center m-3">
             <h1 className="mr-3 text-5xl font-semibold text-white">Chat with your document!</h1>

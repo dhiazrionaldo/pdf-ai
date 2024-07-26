@@ -3,7 +3,7 @@ import ChatSideBar from '@/components/ChatSideBar';
 import PDFViewer from '@/components/PDFViewer';
 import { db } from '@/lib/db';
 import { chats } from '@/lib/db/schema';
-import { auth, UserButton } from '@clerk/nextjs';
+import { auth, UserButton, OrganizationSwitcher } from '@clerk/nextjs';
 import { eq, and } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import React from 'react';
@@ -90,7 +90,10 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                     <div className="flex-[6] border-l-4 border-l-slate-200 overflow-hidden h-screen">
                         <div className="sticky-top top-0 inset-x-0 p-1 bg-white h-fit w-full flex items-center justify-between">
                             <h3 className="text-xl font-bold">Chat</h3>
+                            <div className='flex flex-row gap-2'>
                             <UserButton afterSignOutUrl='/'/>
+                            <OrganizationSwitcher hidePersonal={true} defaultOpen/>
+                            </div>
                             <ClearChat chatId={parseInt(chatId)}/>
                         </div>
                         <ChatComponent chatId={parseInt(chatId)}/>

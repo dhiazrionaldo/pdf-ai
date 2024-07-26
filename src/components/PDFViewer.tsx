@@ -16,7 +16,7 @@ const PDFViewer = ({ pdf_url }: Props) => {
     setIsLoading(false);
   }
   setTimeout(endLoad, 3000);
-  console.log('isLoading', isLoading)
+  
   return (
     <div className="w-full h-full relative">
       {/* Always render loader and iframe, but control their visibility */}
