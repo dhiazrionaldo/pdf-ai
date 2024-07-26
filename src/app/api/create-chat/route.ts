@@ -26,7 +26,15 @@ export async function POST(req: Request, res: Response){
         console.log(file_key, file_name);
         await loadS3IntoPinecone(file_key);
         
-        const chatEntries = memberUserIds.map(memberId => ({
+        type ChatEntry = {
+            fileKey: any;
+            pdfName: any;
+            pdfUrl: any;
+            userId: any;
+            orgId: any;
+        };
+
+        const chatEntries: ChatEntry[] = memberUserIds.map(memberId => ({
             fileKey: file_key,
             pdfName: file_name,
             pdfUrl: getS3Url(file_key),
