@@ -35,11 +35,16 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     const isMobile = useIsMobile(userAgent);
 
     const {userId, orgId} = await auth();
+    const Chats = {
+        userIds: userId!,
+        orgId: orgId!
+    }
     if(!userId){
         return redirect("/sign-in");
     }
 
-    const _chats = await db.select().from(chats).where(and(eq(chats.orgId, orgId), eq(chats.userId, userId))); //.where(eq(chats.userId, userId)); //shows chat list here
+    const _chats = await db.select().from(chats).where(and(eq(chats.userId, Chats.userIds), eq(chats.orgId, Chats.orgId))); //.where(eq(chats.userId, userId)); //shows chat list here
+    
     if(!_chats){
         return redirect("/");
     }
