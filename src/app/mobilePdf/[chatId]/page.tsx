@@ -11,11 +11,12 @@ import {useIsMobile} from '@/hooks/useIsMobile';
 import { headers } from "next/headers";
 import ModalPDFViewer from '@/components/PdfModalViewer';
 import Image from 'next/image';
-import jasLogo from '@/asset/new-logo-cas-group-jas-airport-services.png';
+import jasLogo from '@/asset/jas - white.png';
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, MessageCircle, MessageCircleMore } from 'lucide-react';
+import MobileChatSideBar from '@/components/MobileChatSideBar';
 
 type Props = {
     params: {
@@ -45,8 +46,50 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <>
         {isMobile ? ( 
-            <div className="flex flex-col h-screen w-screen justify-between">
-                <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />                
+            <div className="flex flex-col h-screen w-screen">
+                <div className="max-h-screen relative overflow-scroll">
+                    <div className="fixed top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
+                        <Sheet>
+                        <SheetTrigger asChild >
+                            <Button variant="outline"><Menu /></Button>
+                        </SheetTrigger>
+                        <SheetContent side='left' className='text-gray-200 bg-gray-900'>
+                            <SheetHeader className='text-gray-200 bg-gray-900 w-full px-5'>
+                                <SheetTitle className="flex item-center justify-between">
+                                    <Image src={jasLogo} width={90} height={90} alt="jas logo white" className='pb-3'/>
+                                </SheetTitle>
+                            </SheetHeader> 
+                            <Link href={`/chat/${chatId}`}>
+                                <Button className="w-full border-dashed border-white border"><MessageCircle className='mr-2 w-4 h-4'/> Chats</Button>
+                            </Link>
+                            <MobileChatSideBar chats={_chats} chatId={parseInt(chatId)}/>
+                        </SheetContent>
+                        </Sheet>
+                        <UserButton afterSignOutUrl='/'/>
+                    </div>
+                    <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />      
+                    {/* <div className="sticky top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
+                        <Sheet>
+                            <SheetTrigger asChild className='fixed float-left m-1'>
+                                <Button variant="outline"><Menu /></Button>
+                            </SheetTrigger>
+                            <SheetContent side='left' className='text-gray-200 bg-gray-900'>
+                                <SheetHeader className='text-gray-200 bg-gray-900 w-full px-5'>
+                                    <SheetTitle className="flex item-center justify-between">
+                                    <Image src={jasLogo} width={90} height={90} alt="jas logo white" className='pb-3'/>
+                                    </SheetTitle>
+                                </SheetHeader> 
+                                <Link href={`/chat/${chatId}`}>
+                                    <Button className="w-full border-dashed border-white border"><MessageCircle className='mr-2 w-4 h-4'/> Chats</Button>
+                                </Link>
+                                <MobileChatSideBar chats={_chats} chatId={parseInt(chatId)}/>
+                            </SheetContent>
+                        </Sheet>
+                        <UserButton afterSignOutUrl='/'/>
+                    </div> */}
+                
+                    {/* <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />                 */}
+                </div>
             </div>
             ) : (
             <div className="flex max-h-screen">

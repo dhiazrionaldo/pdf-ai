@@ -9,6 +9,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Message } from "ai";
 import ClearChat from "./ClearChat";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 
 type Props = {chatId: number};
 
@@ -40,24 +41,31 @@ const ChatComponent = ({chatId}: Props) => {
           });
         }
       }, [messages]);
+
+      console.log(messages);
     return (
       <div
-        className="h-screen flex flex-col justify-between"
-        style={{height: '90%'}}
+        className="relative max-h-screen justify-between overflow-scroll"
         id="message-container"
       >
-        <div className="overflow-auto">
-          <MessageList messages={messages} isLoading={isLoading}/>
-        </div>   
+        <div className="sticky top-0 inset-x-0 p-1 bg-white h-fit w-full flex items-center justify-between">
+            <h3 className="text-xl font-bold">Chat</h3>
+            <div className='flex flex-row gap-2'>
+            <UserButton afterSignOutUrl='/'/>
+            <OrganizationSwitcher hidePersonal={true} defaultOpen/>
+            </div>
+            <ClearChat chatId={chatId}/>
+        </div>
+        <MessageList messages={messages} isLoading={isLoading}/>
         
-        <form onSubmit={handleSubmit} className="flex sticky-bottom bottom-0 inset-x-2 px-2 py-4 w-full bg-white">
-          {/* <div className="sticky"> */}
+        <form onSubmit={handleSubmit} className="sticky bottom-0 inset-x-2 px-2 py-4 w-full bg-white">
+          <div className="flex">
             <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full"/>
             <Button>
                 <Send className="h-4 w-4" />
             </Button>
             
-          {/* </div> */}
+          </div>
         </form>
       </div>
     );

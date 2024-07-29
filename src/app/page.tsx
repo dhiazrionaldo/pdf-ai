@@ -11,8 +11,9 @@ import Image from 'next/image';
 import jasLogo from '../asset/jas - white.png';
 
 export default async function Home() {
-  const {userId, orgId} = await auth()
+  const {userId, orgId, orgRole} = await auth()
   const isAuth = !!userId
+  let isAdmin = false;
   
   let firstChat;
   if (orgId) {
@@ -22,8 +23,9 @@ export default async function Home() {
     }
   }
 
-  
-
+  if(orgRole == 'org:admin'){
+    isAdmin = true
+  }
   return (
     <div className="w-screen min-h-screen bg-gradient-to-r from-gray-900 to-gray-600 bg-gradient-to-r">
       <div className="flex flex-col pl-3 pt-3 text-white">
@@ -54,13 +56,14 @@ export default async function Home() {
               )}
           </div>
           <div className="w-full mt-4">
-            {isAuth ? (
+            {isAuth && isAdmin && (
               <FileUpload />
-              ):(
+            )}
+            {!isAuth && (
               <Link href="/sign-in">
                 <Button>Login to get Started <LogIn className="w-4 h-4 ml-2"/></Button>
               </Link>
-            )}
+            )}            
           </div>
         </div>
       </div>

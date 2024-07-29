@@ -46,7 +46,7 @@ const FileUpload = () => {
                         router.push(`/chat/${chat_id}`)
                     },
                     onError: (error) => {
-                        toast.error("Error creating chat");
+                        toast.error("Error creating chat, please re-upload the file");
                         console.log(error);
                     }
                 });

@@ -58,7 +58,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
         <>
         {isMobile ? ( 
             <div className="flex flex-col h-screen w-screen justify-between">
-                <MobileChatComponent chatId={parseInt(chatId)}/>
+                <MobileChatComponent _chats={_chats} chatId={parseInt(chatId)}/>
             </div>
             ) : (
             <div className="flex flex-col h-screen overflow-hidden justify-between">
@@ -87,15 +87,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                     <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
                         <PDFViewer pdf_url={currentChat?.pdfUrl || ""} />
                     </div>
-                    <div className="flex-[6] border-l-4 border-l-slate-200 overflow-hidden h-screen">
-                        <div className="sticky-top top-0 inset-x-0 p-1 bg-white h-fit w-full flex items-center justify-between">
-                            <h3 className="text-xl font-bold">Chat</h3>
-                            <div className='flex flex-row gap-2'>
-                            <UserButton afterSignOutUrl='/'/>
-                            <OrganizationSwitcher hidePersonal={true} defaultOpen/>
-                            </div>
-                            <ClearChat chatId={parseInt(chatId)}/>
-                        </div>
+                    <div className="flex-[6] border-l-4 border-l-slate-200">
                         <ChatComponent chatId={parseInt(chatId)}/>
                     </div>
                 </div>

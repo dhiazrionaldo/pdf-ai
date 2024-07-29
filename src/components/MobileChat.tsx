@@ -14,10 +14,11 @@ import Link from "next/link";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { UserButton } from "@clerk/nextjs";
 import ClearChat from "./ClearChat";
+import MobileChatSideBar from "./MobileChatSideBar";
 
-type Props = {chatId: number};
+type Props = {chatId: number; _chats: any;};
 
-const MobileChatComponent = ({chatId}: Props) => {
+const MobileChatComponent = ({chatId, _chats}: Props) => {
     const { data, isLoading } = useQuery({
         queryKey: ["chat", chatId],
         queryFn: async () => {
@@ -62,26 +63,25 @@ const MobileChatComponent = ({chatId}: Props) => {
                   <SheetHeader className='text-gray-200 bg-gray-900 w-full px-5'>
                       <SheetTitle className="flex item-center justify-between">
                         <Image src={jasLogo} width={90} height={90} alt="jas logo white" className='pb-3'/>
-                        <UserButton />
                       </SheetTitle>
                   </SheetHeader> 
                   <Link href={`/mobilePdf/${chatId}`}>
                       <Button className="w-full border-dashed border-white border"><BookOpenText className='mr-2 w-4 h-4'/> PDF</Button>
                   </Link>
-                  <Link href={`/mobileSideBar/${chatId}`}>
+                  <MobileChatSideBar chats={_chats} chatId={chatId}/>
+                  {/* <Link href={`/mobileSideBar/${chatId}`}>
                       <Button className="w-full border-dashed border-white border"> <MessageCircleMore className='mr-2 w-4 h-4'/> File List</Button>
-                  </Link>
+                  </Link> */}
               </SheetContent>
             </Sheet>
-
+            <UserButton afterSignOutUrl='/'/>
             <ClearChat chatId={chatId} />
-            
           </div>
         {/* </div> */}
 
         {/* message list */}
           
-            <MessageList messages={messages} isLoading={isLoading} />
+          <MessageList messages={messages} isLoading={isLoading} />
           
           
         
