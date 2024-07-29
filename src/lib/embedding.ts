@@ -1,5 +1,7 @@
 import { OpenAIApi, Configuration } from 'openai-edge'
 
+export const maxDuration = 60;
+
 const config = new Configuration({
     apiKey: process.env.OPENAI_API_KEY
 });

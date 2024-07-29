@@ -13,7 +13,6 @@ export async function POST(req: Request, res: Response){
     const {userId, orgId} = await auth();
     const organizationMembers = await clerkClient.organizations.getOrganizationMembershipList({ organizationId: orgId! });
     const memberUserIds = organizationMembers.map(member => member.publicUserData!.userId);
-    console.log(memberUserIds);
 
     if(!userId) {
         return NextResponse.json({error: "Un-Authorized"},{status: 401})

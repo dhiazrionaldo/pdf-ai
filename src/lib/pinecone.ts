@@ -9,6 +9,8 @@ import {
 import { getEmbeddings } from "./embedding";
 import { convertToAscii } from "./utils";
 
+export const maxDuration = 60;
+
 export const getPineconeClient = () => {
   return new Pinecone({
     //environment: process.env.PINECONE_ENVIRONMENT!,
@@ -127,7 +129,7 @@ async function prepareDocument(page: PDFPage) {
     // If tables are found, split the document into sections (excluding tables)
     if (tables.length > 0) {
       // Remove tables from document content
-      doc.pageContent = doc.pageContent.replace(/\b(TABLE|Header|Footer)\b.*?\bEND TABLE\b/gs, "");
+      doc.pageContent = doc.pageContent.replace(/\b(TABLE|Header|Footer)\b.*?\bEND TABLE\b/, "");
       // Append extracted tables as separate documents
       tables.forEach(table => {
         docs.push(new Document({
