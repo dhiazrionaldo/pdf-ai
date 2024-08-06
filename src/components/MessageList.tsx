@@ -47,7 +47,6 @@ const MessageList = ({messages, isLoading}: Props) =>{
                             "rounded-lg px-3 text-sm py-1 shadow-md fing-1 ring-gray-900/10", 
                             {"bg-blue-700 text-white": message.role === "user"}
                         )}>
-                            {/* <p>{message.content}</p> */}
                             {renderMessageContent(message.content)}
                         </div>
                     </div>

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import PDFViewer from '@/components/PDFViewer';
-import ChatComponent from '@/components/ChatComponent';
+import ModalPDFViewer from "@/components/PdfModalViewer";
 
 type Props = {
   pdfUrl: string;
@@ -10,14 +9,12 @@ type Props = {
   chatId: number;
 };
 
-const ChatClientWrapper = ({ pdfUrl, chats, chatId }: Props) => {
+const MobileChatClientWrapper = ({ pdfUrl, chats, chatId }: Props) => {
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
   return (
-    <div className="flex flex-row w-full h-full overflow-hidden">
-      <PDFViewer pdfUrl={pdfUrl} chats={chats} chatId={chatId} pageNumbers={pageNumbers} />
-    </div>
+      <ModalPDFViewer pdfUrl={pdfUrl} chats={chats} chatId={chatId} pageNumbers={pageNumbers} />
   );
 };
 
-export default ChatClientWrapper;
+export default MobileChatClientWrapper;

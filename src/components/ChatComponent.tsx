@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from "react"
+import React from "react"
 import { Input } from "./ui/input";
 import { useChat } from "ai/react"
 import { Button } from "./ui/button";
@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Message } from "ai";
 import ClearChat from "./ClearChat";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
-import { mapValues } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
 
 type Props = {chatId: number; setPageNumbers: React.Dispatch<React.SetStateAction<number[]>>;};
 

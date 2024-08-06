@@ -51,21 +51,6 @@ const ChatPage = async ({params: {chatId}}: Props) => {
             <div className="flex flex-col h-screen overflow-hidden justify-between">
                 <ChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
             </div>
-            // <div className="flex flex-col h-screen overflow-hidden justify-between">
-            //     <div className="flex flex-row w-screen h-screen overflow-hidden">
-                  
-            //       <div className="flex flex-row w-full">
-                   
-            //         <div className="max-h-screen p-0 flex-[5]">
-            //           <PDFViewer pdf_url={currentChat?.pdfUrl || ""}  _chats={_chats} chatId={parseInt(chatId)} pageNumbers={pageNumbers}/>
-            //         </div>
-            //         <div className="flex-[6] border-l-4 border-l-slate-200">
-            //           <ChatComponent chatId={parseInt(chatId)} setPageNumbers={setPageNumbers}/>
-            //         </div>
-            //       </div>
-            //     </div>
-            // </div>
-            
             )
         }
         

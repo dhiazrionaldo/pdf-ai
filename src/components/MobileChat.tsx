@@ -3,7 +3,7 @@ import React from "react"
 import { Input } from "./ui/input";
 import { useChat } from "ai/react"
 import { Button } from "./ui/button";
-import { BookOpenText, Menu, MessageCircleMore, Send } from "lucide-react";
+import { BookOpenText, Menu, PlusCircle, Send } from "lucide-react";
 import MessageList from "./MessageList";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +14,7 @@ import Link from "next/link";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { UserButton } from "@clerk/nextjs";
 import ClearChat from "./ClearChat";
-import MobileChatSideBar from "./MobileChatSideBar";
+import ChatSideBar from "./ChatSideBar";
 
 type Props = {chatId: number; _chats: any;};
 
@@ -52,32 +52,36 @@ const MobileChatComponent = ({chatId, _chats}: Props) => {
         id="message-container"
       >
         {/* header */}
-        {/* <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit"> */}
-          {/* <h3 className="text-xl font-bold">Chat</h3> */}
           <div className="sticky top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
             <Sheet>
-              <SheetTrigger asChild >
-                  <Button variant="outline"><Menu /></Button>
+              <SheetTrigger asChild>
+                <Button variant="outline">
+                  <Menu />
+                </Button>
               </SheetTrigger>
-              <SheetContent side='left' className='text-gray-200 bg-gray-900'>
-                  <SheetHeader className='text-gray-200 bg-gray-900 w-full px-5'>
-                      <SheetTitle className="flex item-center justify-between">
-                        <Image src={jasLogo} width={90} height={90} alt="jas logo white" className='pb-3'/>
-                      </SheetTitle>
-                  </SheetHeader> 
+              <SheetContent side="left" className="text-gray-200 bg-gray-900">
+                <SheetHeader className="text-gray-200 bg-gray-900">
+                  <SheetTitle>
+                    <Image src={jasLogo} width={120} height={120} alt="jas logo white" className="pb-3" />
+                  </SheetTitle>
                   <Link href={`/mobilePdf/${chatId}`}>
-                      <Button className="w-full border-dashed border-white border"><BookOpenText className='mr-2 w-4 h-4'/> PDF</Button>
+                      <Button className="w-full border-dashed border-white border">
+                        <BookOpenText className='mr-2 w-4 h-4'/> PDF
+                      </Button>
                   </Link>
-                  <MobileChatSideBar chats={_chats} chatId={chatId}/>
-                  {/* <Link href={`/mobileSideBar/${chatId}`}>
-                      <Button className="w-full border-dashed border-white border"> <MessageCircleMore className='mr-2 w-4 h-4'/> File List</Button>
-                  </Link> */}
+                  <Link href="/">
+                    <Button className="w-full border-dashed border-white border">
+                      <PlusCircle className="mr-2 w-4 h-4" />
+                      New Chat
+                    </Button>
+                  </Link>
+                </SheetHeader>
+                <ChatSideBar chats={_chats} chatId={chatId} />
               </SheetContent>
             </Sheet>
             <UserButton afterSignOutUrl='/'/>
             <ClearChat chatId={chatId} />
           </div>
-        {/* </div> */}
 
         {/* message list */}
           
@@ -99,26 +103,6 @@ const MobileChatComponent = ({chatId, _chats}: Props) => {
               </div>
           </form>        
       </div>
-      // <div
-      //   className="relative max-h-screen"
-      //   id="message-container"
-      // >
-      //   <div className="relative max-h-screen">
-      //       <div className="overflow-y">
-      //         <MessageList messages={messages} isLoading={isLoading}/>
-      //       </div>
-            
-      //       <form onSubmit={handleSubmit} className="flex sticky bottom-0 inset-x-0 px-2 py-4 bg-white mt-5">
-      //         {/* <div className="flex"> */}
-      //           <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full grow"/>
-      //           <Button>
-      //               <Send className="h-4 w-4" />
-      //           </Button>
-
-      //         {/* </div> */}
-      //       </form>
-      //   </div>
-      // </div>
     );
 }
 

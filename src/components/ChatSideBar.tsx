@@ -2,11 +2,8 @@
 import { DrizzleChat } from '@/lib/db/schema';
 import Link from 'next/link';
 import React from 'react'
-import { Button } from './ui/button';
-import { MessageCircle, PlusCircle, Loader2 } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import jasLogo from '../asset/jas - white.png';
 
 type Props = {
     chats: DrizzleChat[];

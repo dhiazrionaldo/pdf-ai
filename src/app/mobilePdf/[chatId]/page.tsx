@@ -49,26 +49,14 @@ const ChatPage = async ({params: {chatId}}: Props) => {
     return (
         <>
         {isMobile ? ( 
-            <div className="flex flex-col h-screen overflow-hidden justify-between">
-             <MobileChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
-            </div>
+            // <div className="flex w-screen h-screen overflow-hidden">
+            //  <MobileChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
+            // </div>
+            <MobileChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
             ) : (
             <div className="flex flex-col h-screen overflow-hidden justify-between">
                 <ChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
             </div>
-            // <div className="flex max-h-screen">
-            //     <div className="flex w-full max-h-screen">
-            //         <div className="flex-[1] overflow-y" style={{width:'17%'}}>
-            //             <ChatSideBar chats={_chats} chatId={parseInt(chatId)} />
-            //         </div>
-            //         <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
-            //             <PDFViewer _chats={_chats} chatId={parseInt(chatId)} pdf_url={currentChat?.pdfUrl || ""} />
-            //         </div>
-            //         <div className="flex-[3] border-l-4 border-l-slate-200 overflow-y">
-            //             <ChatComponent chatId={parseInt(chatId)}/>
-            //         </div>
-            //     </div>
-            // </div>
             )
         }
         
