@@ -34,7 +34,11 @@
  
     --radius: 0.5rem;
   }
- 
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   .dark {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;

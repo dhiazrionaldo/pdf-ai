@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, MessageCircle, MessageCircleMore } from 'lucide-react';
 import MobileChatSideBar from '@/components/MobileChatSideBar';
+import axios from 'axios';
 
 type Props = {
     params: {
@@ -47,8 +48,8 @@ const ChatPage = async ({params: {chatId}}: Props) => {
         <>
         {isMobile ? ( 
             <div className="flex flex-col h-screen w-screen">
-                <div className="max-h-screen relative overflow-scroll">
-                    <div className="fixed top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
+                {/* <div className="max-h-screen relative overflow-scroll"> */}
+                    {/* <div className="fixed top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
                         <Sheet>
                         <SheetTrigger asChild >
                             <Button variant="outline"><Menu /></Button>
@@ -66,8 +67,8 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                         </SheetContent>
                         </Sheet>
                         <UserButton afterSignOutUrl='/'/>
-                    </div>
-                    <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />      
+                    </div> */}
+                    <PDFViewer _chats={_chats} chatId={parseInt(chatId)} pdf_url={currentChat?.pdfUrl || ""} />      
                     {/* <div className="sticky top-0 inset-x-0 p-2 h-fit w-full flex justify-between z-10">
                         <Sheet>
                             <SheetTrigger asChild className='fixed float-left m-1'>
@@ -89,7 +90,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                     </div> */}
                 
                     {/* <ModalPDFViewer chatId={chatId} pdf_url={currentChat?.pdfUrl || ""} />                 */}
-                </div>
+                {/* </div> */}
             </div>
             ) : (
             <div className="flex max-h-screen">
@@ -98,7 +99,7 @@ const ChatPage = async ({params: {chatId}}: Props) => {
                         <ChatSideBar chats={_chats} chatId={parseInt(chatId)} />
                     </div>
                     <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
-                        <PDFViewer pdf_url={currentChat?.pdfUrl || ""} />
+                        <PDFViewer _chats={_chats} chatId={parseInt(chatId)} pdf_url={currentChat?.pdfUrl || ""} />
                     </div>
                     <div className="flex-[3] border-l-4 border-l-slate-200 overflow-y">
                         <ChatComponent chatId={parseInt(chatId)}/>

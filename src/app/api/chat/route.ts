@@ -24,7 +24,8 @@ export async function POST(req: Request) {
     const fileKey = _chats[0].fileKey;
     const lastMessage = messages[messages.length - 1];
     const context = await getContext(lastMessage.content, fileKey);
-    
+    let pageNumbers = [];
+
     const prompt = {
       role: "system",
       content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -74,6 +75,7 @@ export async function POST(req: Request) {
       ],
       stream: true,
     });
+
     const stream = OpenAIStream(response, {
       onStart: async () => {
         // save user message into db
@@ -89,9 +91,11 @@ export async function POST(req: Request) {
           chatId,
           content: completion,
           role: "system",
-        });
+        });     
+
       },
-    });
+    }); 
+    
     return new StreamingTextResponse(stream);
   } catch (error) {}
 }

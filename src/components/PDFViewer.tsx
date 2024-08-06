@@ -1,41 +1,212 @@
-"use client"
-import React , { useState } from "react";
-import { Loader2 } from 'lucide-react';
+"use client";
 
-type Props = { pdf_url: string };
+import React, { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { Document, Page, pdfjs } from "react-pdf";
+import toast from "react-hot-toast";
+import { useResizeDetector } from "react-resize-detector";
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+import Image from 'next/image';
+import jasLogo from '@/asset/jas - white.png';
+import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { BookOpenText, Menu, MessageCircleMore, PlusCircle } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import PDFToolbar from '@/components/PDFToolBar';
+import ChatSideBar from "./ChatSideBar";
 
-const PDFViewer = ({ pdf_url }: Props) => {
-  const completeUrl = `https://docs.google.com/gview?url=${pdf_url}&embedded=true`;
-  const [isLoading, setIsLoading] = useState(true);
-  
-  const startLoad = () => {
-    setIsLoading(true);
-  }
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
 
-  const endLoad = () =>{
-    setIsLoading(false);
-  }
-  setTimeout(endLoad, 3000);
-  
+type Props = { pdfUrl: string; chats: any[]; chatId: number; pageNumbers: number[] };
+
+const PDFViewer = ({ pdfUrl, chats, chatId, pageNumbers }: Props) => {
+  const [numPages, setNumPages] = useState<number | null>(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const { width, height, ref } = useResizeDetector();
+
+  const onDocumentLoadSuccess = ({ numPages }: any) => {
+    setNumPages(numPages);
+  };
+
+  const handlePreviousPage = () => {
+    setPageNumber((prevPageNumber) => Math.max(prevPageNumber - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setPageNumber((prevPageNumber) => Math.min(prevPageNumber + 1, numPages!));
+  };
+
+  const handlePageInputChange = (pageNumber: number) => {
+    setPageNumber(pageNumber);
+  };
+
+  useEffect(() => {
+    if (pageNumbers.length > 0) {
+      setPageNumber(pageNumbers[0]); // Navigate to the first page number from the chat
+    }
+  }, [pageNumbers]);
+
   return (
-    <div className="w-full h-full relative">
-      {/* Always render loader and iframe, but control their visibility */}
-      
-      {isLoading && (
-        <div className={`w-full h-full flex items-center justify-center absolute top-0 left-0`}>
-          <Loader2 className='h-10 w-10 text-blue-600 animate-spin' />
-        </div>
-      )}
-      <iframe
-          src={completeUrl}
-          className={`w-full h-full ${isLoading ? 'invisible' : 'visible'}`}
-          loading="lazy"
-          onLoad={endLoad}
-          // onLoadStart={startLoad}
-          // onLoadedData={endLoad}
+    <div className="flex h-full">
+      <div className="w-fit">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="text-gray-200 bg-gray-900">
+            <SheetHeader className="text-gray-200 bg-gray-900">
+              <SheetTitle>
+                <Image src={jasLogo} width={120} height={120} alt="jas logo white" className="pb-3" />
+              </SheetTitle>
+              <Link href="/">
+                <Button className="w-full border-dashed border-white border">
+                  <PlusCircle className="mr-2 w-4 h-4" />
+                  New Chat
+                </Button>
+              </Link>
+            </SheetHeader>
+            <ChatSideBar chats={chats} chatId={chatId} />
+          </SheetContent>
+        </Sheet>
+        <PDFToolbar
+          onPreviousPage={handlePreviousPage}
+          onNextPage={handleNextPage}
+          currentPage={pageNumber}
+          totalPages={numPages!}
+          onPageInputChange={handlePageInputChange}
         />
+      </div>
+      <div ref={ref} className="flex-1 h-screen overflow-scroll">
+        <Document
+          file={pdfUrl}
+          onLoadSuccess={onDocumentLoadSuccess}
+          loading={
+            <div className="flex justify-center">
+              <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
+            </div>
+          }
+          onLoadError={() => {
+            toast.error("Error Loading PDF, Please Re-Load the Page!");
+          }}
+        >
+          <Page pageNumber={pageNumber} width={width ? width : 1} height={height ? height : 1} />
+        </Document>
+      </div>
     </div>
   );
 };
 
 export default PDFViewer;
+
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import { Loader2 } from "lucide-react";
+// import { Document, Page, pdfjs } from "react-pdf";
+// import toast from "react-hot-toast";
+// import { useResizeDetector } from "react-resize-detector";
+// import 'react-pdf/dist/Page/AnnotationLayer.css';
+// import 'react-pdf/dist/Page/TextLayer.css';
+// import Image from 'next/image';
+// import jasLogo from '@/asset/jas - white.png';
+// import { Button } from "@/components/ui/button";
+// import Link from 'next/link';
+// import { BookOpenText, Menu, MessageCircleMore, PlusCircle } from 'lucide-react';
+// import {
+//     Sheet,
+//     SheetContent,
+//     SheetHeader,
+//     SheetTitle,
+//     SheetTrigger,
+//   } from "@/components/ui/sheet";
+// import PDFToolbar from '@/components/PDFToolBar';
+// import ChatSideBar from "./ChatSideBar";
+
+// pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
+
+// type Props = { pdf_url: string; _chats: any; chatId: number; pageNumbers: number[]; };
+
+// const PDFViewer = ({ pdf_url, _chats, chatId, pageNumbers }: Props) => {
+//   const [numPages, setNumPages] = useState(null);
+//   const [pageNumber, setPageNumber] = useState(1);
+//   const { width, height, ref } = useResizeDetector();
+
+//   const onDocumentLoadSuccess = ({ numPages }: any) => {
+//   setNumPages(numPages);
+// };
+
+//   const handlePreviousPage = () => {
+//     setPageNumber((prevPageNumber) => Math.max(prevPageNumber - 1, 1));
+//   };
+
+//   const handleNextPage = () => {
+//     setPageNumber((prevPageNumber) => Math.min(prevPageNumber + 1, numPages!));
+//   };
+
+//   const handlePageInputChange = (pageNumber: number) => {
+//     setPageNumber(pageNumber);
+//   };
+
+//   useEffect(() => {
+//     if (pageNumbers.length > 0) {
+//       const newPage = pageNumbers[0]; // Example: use the first page number from the array
+//       setPageNumber(newPage);
+//     }
+//   }, [pageNumbers]);
+
+//   return (
+//     <div className="flex h-full">
+//       <div className="w-fit">
+//             <Sheet>
+//               <SheetTrigger asChild>
+//               <Button variant="outline">
+//                   <Menu />
+//               </Button>
+//               </SheetTrigger>
+//               <SheetContent side="left" className="text-gray-200 bg-gray-900">
+//               <SheetHeader className="text-gray-200 bg-gray-900">
+//                   <SheetTitle>
+//                   <Image src={jasLogo} width={120} height={120} alt="jas logo white" className="pb-3" />
+//                   </SheetTitle>
+
+//                   <Link href="/">
+//                   <Button className="w-full border-dashed border-white border">
+//                       <PlusCircle className="mr-2 w-4 h-4" />
+//                       New Chat
+//                   </Button>
+//                   </Link>
+//               </SheetHeader>
+//               <ChatSideBar chats={_chats} chatId={chatId} />
+//               </SheetContent>
+//             </Sheet>
+//             <PDFToolbar
+//               onPreviousPage={handlePreviousPage}
+//               onNextPage={handleNextPage}
+//               currentPage={pageNumber}
+//               totalPages={numPages!}
+//               onPageInputChange={handlePageInputChange}
+//             />
+//             </div>
+//       <div ref={ref} className="flex-1 h-screen overflow-scroll">
+//         <Document
+//           file={pdf_url}
+//           onLoadSuccess={onDocumentLoadSuccess}
+//           loading={
+//             <div className="flex justify-center">
+//               <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
+//             </div>
+//           }
+//           onLoadError={() => {
+//             toast.error("Error Loading PDF, Please Re-Load the Page!");
+//           }}
+//         >
+//           <Page pageNumber={pageNumber} width={width ? width : 1} height={height ? height : 1} />
+//         </Document>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PDFViewer;
