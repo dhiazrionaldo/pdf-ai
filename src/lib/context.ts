@@ -2,6 +2,8 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import { convertToAscii } from "./utils";
 import { getEmbeddings } from "./embedding";
 
+export const maxDuration = 60;
+
 export async function getMatchesFromEmbeddings(
   embeddings: number[],
   fileKey: string

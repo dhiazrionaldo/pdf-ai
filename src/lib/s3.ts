@@ -1,5 +1,7 @@
 import { S3, PutObjectCommand } from '@aws-sdk/client-s3';
 
+export const maxDuration = 60;
+
 export async function uploadToS3(file: File){
     try {
         console.log("Initializing S3 client...");

@@ -2,6 +2,8 @@ import { S3, GetObjectCommand } from '@aws-sdk/client-s3';
 import fs from 'fs';
 import { Readable } from 'stream';
 
+export const maxDuration = 60;
+
 export async function downloadFromS3(file_key: string) {
     try {
         console.log("Initializing S3 client...");

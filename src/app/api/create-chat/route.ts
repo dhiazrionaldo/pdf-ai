@@ -46,17 +46,6 @@ export async function POST(req: Request, res: Response){
         });
 
         return NextResponse.json({ chat_ids: chatIds.map(chat => chat.insertedId) }, { status: 200 });
-        // const chat_id = await db.insert(chats).values({
-        //     fileKey: file_key,
-        //     pdfName: file_name,
-        //     pdfUrl: getS3Url(file_key),
-        //     userId,
-        //     orgId
-        // }).returning({
-        //     insertedId: chats.id
-        // })
-        
-        // return NextResponse.json({chat_id: chat_id[0].insertedId}, {status: 200})
     } catch (error) {
         console.log(error);
         return NextResponse.json(
