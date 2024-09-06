@@ -1,5 +1,6 @@
 'use client'
 import { uploadToS3 } from '@/lib/s3';
+import { uploadToOSS } from '@/lib/oss';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Inbox, Loader2 } from 'lucide-react';
 import axios from 'axios';
@@ -32,7 +33,8 @@ const FileUpload = () => {
 
             try {
                 setUploading(true);
-                const data = await uploadToS3(file);   
+                // const data = await uploadToS3(file);   
+                const data = await uploadToOSS(file);   
 
                 if(!data?.file_key || !data.file_name){
                     toast.error("something wrong within the file_key or file_name");

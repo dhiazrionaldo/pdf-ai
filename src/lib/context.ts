@@ -16,7 +16,7 @@ export async function getMatchesFromEmbeddings(
     const pineconeIndex = await client.index("pdf-ai-jas");
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
     const queryResult = await namespace.query({
-      topK: 6,
+      topK: 10,
       vector: embeddings,
       includeMetadata: true,
     });
@@ -34,7 +34,6 @@ export async function getContext(query: string, fileKey: string) {
   const qualifyingDocs = matches.filter(
     (match) => match.score && match.score >= 0.7
   );
-  
   // let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
 
   type Metadata = {
@@ -47,7 +46,6 @@ export async function getContext(query: string, fileKey: string) {
     return `Page ${metadata.pageNumber}: ${metadata.text}`;
   });
   
-
   // 5 vectors
   return context.join("\n").substring(0, 10000);
 }

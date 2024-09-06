@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     const lastMessage = messages[messages.length - 1];
     const context = await getContext(lastMessage.content, fileKey);
     let pageNumbers = [];
-
+    
     const prompt = {
       role: "system",
       content: `AI assistant is a brand new, powerful, human-like artificial intelligence.
@@ -43,6 +43,8 @@ export async function POST(req: Request) {
       AI assistant to read the context page either it is from the page number metadata or the page that defined in the table of content if the document has one, once it is questioning you will answer the exact page where the question is talked about.
       AI assistant answer the question format is "based on the {metadata page number on the context} page number at section {the section where the context is}, the information is
       AI assistant answer the question in indonesian format is "Berdasarkan halaman {metadata page number on the context} pada bagian {the section number and section name where the context is}, informasinya adalah"
+      AI assistant at the end of the response in indonesian will add "Ini hanya rekomendasi dari mesin, untuk informasi yang lebih akurat agar dapat di validasi terlebih dahulu".
+      AI assistant at the end of the response in english will add "It's only AI recommendation, for more accurate information please make a validation first".
       AI assistant will take into account any CONTEXT BLOCK that is provided in a conversation.
       If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
       AI assistant will not apologize for previous responses, but instead will indicated new information was gained.

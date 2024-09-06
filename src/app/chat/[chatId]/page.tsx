@@ -43,17 +43,16 @@ const ChatPage = async ({params: {chatId}}: Props) => {
   
     return (
         <>
-        {isMobile ? ( 
-            <div className="flex flex-col h-screen w-screen justify-between">
-                <MobileChatComponent _chats={_chats} chatId={parseInt(chatId)}/>
-            </div>
-            ) : (
-            <div className="flex flex-col h-screen overflow-hidden justify-between">
-                <ChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
-            </div>
-            )
-        }
-        
+            {isMobile ? ( 
+                <div className="flex flex-col h-screen w-screen justify-between">
+                    <MobileChatComponent _chats={_chats} chatId={parseInt(chatId)}/>
+                </div>
+                ) : (
+                <div className="flex flex-col h-screen overflow-hidden justify-between">
+                    <ChatClientWrapper pdfUrl={currentChat?.pdfUrl || ""} chats={_chats} chatId={parseInt(chatId)} />
+                </div>
+                )
+            }
         </>
     );
 };

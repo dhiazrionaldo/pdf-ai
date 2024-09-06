@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { loadS3IntoPinecone } from "@/lib/pinecone";
+import { loadS3IntoPinecone, loadOSSIntoPinecone } from "@/lib/pinecone";
 import { getS3Url } from "@/lib/s3";
+import { getOSSUrl } from "@/lib/oss";
 import { auth, clerkClient } from "@clerk/nextjs";
 import { keepPreviousData } from "@tanstack/react-query";
 import { NextResponse } from "next/server";
@@ -22,8 +23,9 @@ export async function POST(req: Request, res: Response){
         const body = await req.json()
         const {file_key, file_name} = body
         
-        console.log(file_key, file_name);
-        await loadS3IntoPinecone(file_key);
+        
+        // await loadS3IntoPinecone(file_key); //old setup using aws-s3
+        await loadOSSIntoPinecone(file_key);
         
         type ChatEntry = {
             fileKey: any;
@@ -36,7 +38,8 @@ export async function POST(req: Request, res: Response){
         const chatEntries: ChatEntry[] = memberUserIds.map(memberId => ({
             fileKey: file_key,
             pdfName: file_name,
-            pdfUrl: getS3Url(file_key),
+            // pdfUrl: getS3Url(file_key),
+            pdfUrl: getOSSUrl(file_key), 
             userId: memberId,
             orgId
         }));
