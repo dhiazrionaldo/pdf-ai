@@ -71,7 +71,7 @@ export async function POST(req: Request) {
     };
     
     const response = await openai.createChatCompletion({
-      model: "gpt-4-turbo",
+      model: "gpt-4o",
       messages: [
         prompt,
         ...messages.filter((message: Message) => message.role === "user"),
